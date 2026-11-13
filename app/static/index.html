@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOP claims agent · test console</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%231f4fd1'/%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <strong>SOP claims agent</strong>
+      <span class="muted">test console</span>
+    </div>
+    <div class="top-actions">
+      <span id="brain-badge" class="badge" title="What is doing the language work"></span>
+      <button type="button" id="btn-data">Test data</button>
+      <button type="button" id="btn-settings">Settings</button>
+      <button type="button" id="btn-new" class="primary">New conversation</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="chat" aria-label="Conversation">
+      <ol id="stepper" class="stepper" aria-label="Workflow phase"></ol>
+      <div id="banner" class="banner" role="status" hidden></div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <div class="scenarios">
+        <span class="muted">Try</span>
+        <div id="scenarios" class="chips"></div>
+      </div>
+      <form id="composer" class="composer">
+        <label class="sr-only" for="input">Message as the caller</label>
+        <textarea id="input" rows="2" placeholder="Type as the caller. Enter sends, Shift+Enter adds a line."></textarea>
+        <button type="submit" class="primary" id="send">Send</button>
+      </form>
+    </section>
+
+    <aside class="inspector" aria-label="Harness state">
+      <section class="card">
+        <h2>Identity gate</h2>
+        <div id="identity"></div>
+      </section>
+      <section class="card">
+        <h2>Memory <span class="muted small">kept across phases</span></h2>
+        <div id="memory"></div>
+      </section>
+      <section class="card">
+        <h2>Case and policies</h2>
+        <div id="case"></div>
+      </section>
+      <section class="card" id="wrapup-card">
+        <h2>Wrap-up</h2>
+        <div id="wrapup"></div>
+      </section>
+      <section class="card">
+        <h2>Turn trace <span class="muted small">what the harness did</span></h2>
+        <div id="trace"></div>
+      </section>
+    </aside>
+  </main>
+
+  <dialog id="dlg-settings">
+    <form method="dialog" id="settings-form">
+      <h2>Settings</h2>
+      <p id="settings-note" class="note" hidden></p>
+      <fieldset>
+        <legend>Language model</legend>
+        <label class="radio"><input type="radio" name="brain" value="claude"> Claude <span class="muted" id="model-name"></span></label>
+        <label class="radio"><input type="radio" name="brain" value="stub"> Offline stub <span class="muted">keyword rules, no model; for checking the harness without a key</span></label>
+      </fieldset>
+      <label class="field">
+        <span>Anthropic API key <span class="muted" id="key-hint"></span></span>
+        <input type="password" id="api-key" autocomplete="off" spellcheck="false" placeholder="sk-ant-…">
+        <span class="muted small">Sent with each message in a request header and kept only in this browser tab. The server does not store it.</span>
+      </label>
+      <label class="field">
+        <span>Consent simulator <span class="muted">for representative calls</span></span>
+        <select id="consent-scenario"></select>
+      </label>
+      <div class="dialog-actions">
+        <button type="button" id="settings-cancel">Cancel</button>
+        <button type="submit" class="primary">Save and start new conversation</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-data">
+    <div class="dialog-head">
+      <h2>Test data</h2>
+      <button type="button" id="data-close">Close</button>
+    </div>
+    <p class="muted">The sample records behind the demo. This is what the agent must protect: nothing here should appear in a reply before the caller is verified.</p>
+    <div id="data-body"></div>
+  </dialog>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

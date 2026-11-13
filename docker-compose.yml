@@ -1,0 +1,14 @@
+services:
+  agent:
+    build: .
+    image: sop-claims-agent
+    ports:
+      - "8000:8000"
+    environment:
+      # The API token for the model. Leave empty to enter a key in the console's Settings instead.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      SOP_MODEL: ${SOP_MODEL:-claude-opus-5-5}
+      SOP_NLU_MODEL: ${SOP_NLU_MODEL:-claude-haiku-5-5}
+      SOP_EFFORT: ${SOP_EFFORT:-low}
+      LLM_PROVIDER: ${LLM_PROVIDER:-anthropic}
+      DEMO_TODAY: ${DEMO_TODAY:-2026-03-02}
